@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+/* .ant-menu{
+    position: relative;
+}
+.ant-layout-sider-trigger{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 20px;
+    border-radius: 50%;
+} */
