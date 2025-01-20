@@ -14,7 +14,7 @@ const userRole = {
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
 
-  const role = "student";
+  const role = "admin";
   let sidebarItems;
 
   switch (role) {
