@@ -1,29 +1,17 @@
-import { Layout, Menu, MenuProps } from "antd";
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
+import { Layout, Menu } from "antd";
 import React, { useState } from "react";
+import { adminSidebarItems } from "../../routes/admin.routes";
+import { Outlet } from "react-router-dom";
 const { Header, Content, Footer, Sider } = Layout;
 
-const items = [
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  UserOutlined,
-].map((icon, index) => ({
-  key: String(index + 1),
-  icon: React.createElement(icon),
-  label: `nav ${index + 1}`,
-}));
-
 const MainLayout = () => {
-    const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
   return (
     <Layout style={{ height: "100vh" }}>
       <Sider
-        collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
       >
         <div
           style={{
@@ -34,13 +22,13 @@ const MainLayout = () => {
             alignItems: "center",
           }}
         >
-          <h1>PH University</h1>
+          <h1>PH Uni</h1>
         </div>
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["4"]}
-          items={items}
+          items={adminSidebarItems}
         />
       </Sider>
       <Layout>
@@ -52,7 +40,7 @@ const MainLayout = () => {
               minHeight: 360,
             }}
           >
-            sfdsfs
+            <Outlet/>
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
