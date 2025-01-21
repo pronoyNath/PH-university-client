@@ -1,13 +1,15 @@
-import MainLayout from "./components/layout/MainLayout"
-import './index.css'
+import MainLayout from "./components/layout/MainLayout";
+import ProtectedRoute from "./components/layout/ProtectedRoute";
+import "./index.css";
 
 function App() {
-
   return (
     <div>
-      <MainLayout/>
+      <ProtectedRoute>
+        <MainLayout />
+      </ProtectedRoute>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
