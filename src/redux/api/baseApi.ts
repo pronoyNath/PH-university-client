@@ -29,14 +29,14 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   const result = await baseQuery(args, api, extraOptions);
   // console.log(result);
   if (result.error?.status == 401) {
-    console.log("aslam bhitore");
+    // console.log("aslam bhitore");
     const res = await fetch("http://localhost:3000/api/v1/auth/refresh-token", {
       method: "POST",
-      credentials: "include",
+      credentials: "include", //means cookies send to backend
     });
     const data = await res.json();
-    console.log("data===>", data);
-    console.log("token===>", data?.data?.accessToken);
+    // console.log("data===>", data);
+    // console.log("token===>", data?.data?.accessToken);
     if (data?.data?.accessToken) {
       const user = (api.getState() as RootState).auth.user;
       api.dispatch(
