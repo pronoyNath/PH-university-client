@@ -13,7 +13,10 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [login] = useLoginMutation();
-
+  const defaultValues = {
+    userId: "A-0002",
+    password: "admin123",
+  };
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
     const toastID = toast.loading("logging in");
@@ -34,10 +37,10 @@ const Login = () => {
       console.log(err);
     }
   };
-  
+
   return (
     <Row justify={"center"} align={"middle"} style={{ height: "100vh" }}>
-      <PHForm onSubmit={onSubmit}>
+      <PHForm onSubmit={onSubmit} defaultValues={defaultValues}>
         <PHInput label={"Id: "} name={"userId"} type={"text"} />
         <PHInput label="password: " name={"password"} type={"text"} />
         <Button htmlType="submit">Log in</Button>
