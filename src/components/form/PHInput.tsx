@@ -1,4 +1,5 @@
-import { useFormContext } from "react-hook-form";
+import { Input } from "antd";
+import { Controller } from "react-hook-form";
 type TPHInput = {
   type: string;
   name: string;
@@ -6,12 +7,14 @@ type TPHInput = {
 };
 
 const PHInput = ({ type, name, label }: TPHInput) => {
-  const { register } = useFormContext(); //react hook form context
   return (
-    <>
+    <div style={{ marginBottom: "20px" }}>
       {label ? label : null}
-      <input type={type} id={name} {...register(name)} />
-    </>
+      <Controller //"Controller" for use react-hook logic on atnd
+        name={name} //alternative of "register of react-hook"
+        render={({ field }) => <Input type={type} id={name} {...field} />}
+      />
+    </div>
   );
 };
 
