@@ -10,16 +10,20 @@ import {
 
 type TFormConfig = {
   defaultValues?: Record<string, any>;
+  resolver?: any;
 };
 type TPHFrom = {
   children: ReactNode;
   onSubmit: SubmitHandler<FieldValues>;
 } & TFormConfig;
 
-const PHForm = ({ children, onSubmit, defaultValues }: TPHFrom) => {
+const PHForm = ({ children, onSubmit, defaultValues, resolver }: TPHFrom) => {
   const formConfig: TFormConfig = {};
   if (defaultValues) {
     formConfig["defaultValues"] = defaultValues;
+  }
+  if (resolver) {
+    formConfig["resolver"] = resolver;
   }
 
   const methods = useForm(formConfig);
