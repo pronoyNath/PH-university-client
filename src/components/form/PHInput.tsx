@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Form, Input } from "antd";
 import { Controller } from "react-hook-form";
 type TPHInput = {
   type: string;
@@ -8,11 +8,14 @@ type TPHInput = {
 
 const PHInput = ({ type, name, label }: TPHInput) => {
   return (
-    <div style={{ marginBottom: "20px" }}>
-      {label ? label : null}
+    <div style={{ marginBottom: "0px" }}>
       <Controller //"Controller" for use react-hook logic on atnd
         name={name} //alternative of "register of react-hook"
-        render={({ field }) => <Input type={type} id={name} {...field} />}
+        render={({ field }) => (
+          <Form.Item label={label}>
+            <Input type={type} id={name} {...field} size="large"/>
+          </Form.Item>
+        )}
       />
     </div>
   );

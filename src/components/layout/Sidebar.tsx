@@ -40,6 +40,7 @@ const Sidebar = () => {
       collapsible
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
+      style={{height:"100vh", position:'sticky', top: '0', left:'0'}}
     >
       <div
         style={{
