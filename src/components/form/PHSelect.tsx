@@ -6,6 +6,7 @@ type TPHSelect = {
   options: { label: string; value: string; disabled?: boolean }[];
 };
 const PHSelect = ({ name, label, options }: TPHSelect) => {
+  console.log("opt", options);
   return (
     <Controller
       name={name}
@@ -17,7 +18,7 @@ const PHSelect = ({ name, label, options }: TPHSelect) => {
             options={options}
             size="large"
           />
-          {error && <small style={{color: "red"}}>{error?.message}</small>}
+          {error && <small style={{ color: "red" }}>{error?.message}</small>}
         </Form.Item>
       )}
     />

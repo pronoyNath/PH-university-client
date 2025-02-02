@@ -5,6 +5,8 @@ import { Button, Col, Flex } from "antd";
 import { useCreateAcademicFacultyMutation } from "../../../redux/features/admin/academicManagement.api";
 import { toast } from "sonner";
 import { TResponse } from "../../../types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { academicFacultySchema } from "../../../schemas/academicManagement.schema";
 
 const CreateAcademicFaculty = () => {
   const [createFaculty] = useCreateAcademicFacultyMutation(undefined);
@@ -28,7 +30,10 @@ const CreateAcademicFaculty = () => {
   return (
     <Flex justify="center" align="center">
       <Col span={6}>
-        <PHForm onSubmit={handleCreateFaculty}>
+        <PHForm 
+        onSubmit={handleCreateFaculty}
+        resolver={zodResolver(academicFacultySchema)} 
+        >
           <PHInput label={"Faculty Name: "} name={"name"} type={"text"} />
           <Button htmlType="submit">Create</Button>
         </PHForm>
