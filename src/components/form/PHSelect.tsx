@@ -6,7 +6,7 @@ type TPHSelect = {
   options: { label: string; value: string; disabled?: boolean }[];
 };
 const PHSelect = ({ name, label, options }: TPHSelect) => {
-  console.log("opt", options);
+  // console.log("opt", options);
   return (
     <Controller
       name={name}

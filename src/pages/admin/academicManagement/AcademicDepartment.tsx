@@ -1,8 +1,15 @@
+import { useGetAcademicDepartmentsQuery } from "../../../redux/features/admin/academicManagement.api";
 
 const AcademicDepartment = () => {
+  const { data: departmentData } = useGetAcademicDepartmentsQuery(undefined);
+  console.log("Fac", departmentData);
   return (
     <div>
-      dddd
+      {departmentData?.data?.map((item) => (
+        <ul>
+          <li>{item.name}</li>
+        </ul>
+      ))}
     </div>
   );
 };

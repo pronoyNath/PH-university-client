@@ -35,7 +35,7 @@ const CreateAcademicFaculty = () => {
         resolver={zodResolver(academicFacultySchema)} 
         >
           <PHInput label={"Faculty Name: "} name={"name"} type={"text"} />
-          <Button htmlType="submit">Create</Button>
+          <Button htmlType="submit">Submit</Button>
         </PHForm>
       </Col>
     </Flex>
