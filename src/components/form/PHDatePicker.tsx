@@ -12,7 +12,7 @@ const PHDatePicker = ({ name, label }: TPHDate) => {
         name={name} //alternative of "register of react-hook"
         render={({ field, fieldState: { error } }) => (
           <Form.Item label={label}>
-           <DatePicker {...field} size="large" style={{width:'100%'}}/>
+           <DatePicker  {...field} size="large" style={{width:'100%'}}/>
            {error && <small style={{color: "red"}}>{error?.message}</small>}
           </Form.Item>
         )}

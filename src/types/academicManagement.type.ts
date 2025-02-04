@@ -16,6 +16,7 @@ export type TAcademicFaculty = {
   updatedAt: string;
 };
 export type TAcademicDepartment = {
+  _id: string;
   name: string;
   academicFaculty: string;
 };
