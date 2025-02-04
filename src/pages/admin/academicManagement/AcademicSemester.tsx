@@ -11,10 +11,7 @@ type TableDataType = Pick<
 const AcademicSemester = () => {
   const [params, setParams] = useState<TQueryParam[] | undefined>([]);
   const { data: semesterData, isFetching } = useGetAllSemestersQuery(params);
-  //   [
-  //   { name: "startMonth", value: "January" },
-  // ]
-  // console.log("data->", semesterData);
+  
   const tableData = semesterData?.data?.map(
     ({ _id, name, startMonth, endMonth, year }) => ({
       key: _id,

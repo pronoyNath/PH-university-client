@@ -4,10 +4,16 @@ import { useGetAcademicDepartmentsQuery } from "../../../redux/features/admin/ac
 type TableDataType = {
   facultyName: string;
   departmentName: string;
-}
+};
+
+type TModifiedData = {
+  departmentName: string;
+  facultyName: string;
+};
 
 const AcademicDepartment = () => {
-  const { data: departmentData, isFetching } = useGetAcademicDepartmentsQuery(undefined);
+  const { data: departmentData, isFetching } =
+    useGetAcademicDepartmentsQuery(undefined);
   // console.log("Fac", departmentData);
   const modifiedDeptData = departmentData?.data?.map((item) => ({
     facultyName: item?.academicFaculty?.name,

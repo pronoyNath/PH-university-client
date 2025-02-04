@@ -3,8 +3,8 @@ import { Controller } from "react-hook-form";
 type TPHSelect = {
   name: string;
   label?: string;
-  options: { label: string; value: string; disabled?: boolean }[];
-};
+  options: { label: string; value: string; disabled?: boolean }[] | undefined;
+} ;
 const PHSelect = ({ name, label, options }: TPHSelect) => {
   // console.log("opt", options);
   return (
