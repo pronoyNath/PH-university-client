@@ -12,6 +12,8 @@ import {
   useGetAcademicDepartmentsQuery,
   useGetAllSemestersQuery,
 } from "../../../redux/features/admin/academicManagement.api";
+import { useAddStudentMutation } from "../../../redux/features/admin/userManagement.api";
+import { toast } from "sonner";
 
 const studentDummyData = {
   password: "student123",
@@ -62,7 +64,7 @@ const defatultData = {
   contactNo: "1235678",
   bloogGroup: "A+",
 
-  email: "student2@gmail.com",
+  email: "studensdfst2@gmail.com",
   emergencyContactNo: "987-654-3210",
   presentAddress: "123 Main St, Cityville",
   permanentAddress: "456 Oak St, Townsville",
@@ -82,11 +84,13 @@ const defatultData = {
     contactNo: "777-888-9999",
     address: "789 Pine St, Villageton",
   },
+  
 };
 const CreateStudent = () => {
   const { data: semesterData, isLoading } = useGetAllSemestersQuery(undefined);
   const { data: departmentData, isLoading: isDeptLoading } =
     useGetAcademicDepartmentsQuery(undefined);
+  const [addStudent] = useAddStudentMutation();
 
   const modifiedSData = semesterData?.data?.map((item) => ({
     label: `${item?.name} ${item.year}`,
@@ -96,15 +100,35 @@ const CreateStudent = () => {
     label: item?.name,
     value: item?._id,
   }));
-  console.log(semesterData);
-  const handleAddStudent: SubmitHandler<FieldValues> = (data) => {
+
+  const handleAddStudent: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
+    const toastId = toast.loading("creating...");
 
-    // const formData = new FormData();
-    // formData.append("data", JSON.stringify(data));
-
+    const studentData = {
+      password: "student123",
+      student: data,
+    };
+    // cause backend need form data.
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(studentData));
     //! only for dev perpose
-    // console.log(Object.fromEntries(formData));
+    console.log(Object.fromEntries(formData));
+
+    try{
+      const res = (await addStudent(formData));
+      console.log(res);
+      if (res?.error) {
+        toast.error(res?.error?.data?.message, { id: toastId });
+      }
+      if (res?.data?.success) {
+        toast.success(res?.data?.message, { id: toastId });
+      }
+    }catch(err){
+      toast.error("Something went wrong!");
+      console.log(err)
+    }
+
   };
   return (
     <Row>
