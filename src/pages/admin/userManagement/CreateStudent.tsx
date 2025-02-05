@@ -1,7 +1,7 @@
-import { Button, Col, Divider, Row } from "antd";
+import { Button, Col, Divider, Form, Input, Row } from "antd";
 import PHForm from "../../../components/form/PHForm";
 import PHInput from "../../../components/form/PHInput";
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
 import PHSelect from "../../../components/form/PHSelect";
 import {
   bloodGroupOptions,
@@ -64,7 +64,7 @@ const defatultData = {
   contactNo: "1235678",
   bloogGroup: "A+",
 
-  email: "studensdfst2@gmail.com",
+  email: "hello@gmail.com",
   emergencyContactNo: "987-654-3210",
   presentAddress: "123 Main St, Cityville",
   permanentAddress: "456 Oak St, Townsville",
@@ -84,7 +84,6 @@ const defatultData = {
     contactNo: "777-888-9999",
     address: "789 Pine St, Villageton",
   },
-  
 };
 const CreateStudent = () => {
   const { data: semesterData, isLoading } = useGetAllSemestersQuery(undefined);
@@ -112,11 +111,12 @@ const CreateStudent = () => {
     // cause backend need form data.
     const formData = new FormData();
     formData.append("data", JSON.stringify(studentData));
+    formData.append("file", data?.profileImg);
     //! only for dev perpose
     console.log(Object.fromEntries(formData));
 
-    try{
-      const res = (await addStudent(formData));
+    try {
+      const res = await addStudent(formData);
       console.log(res);
       if (res?.error) {
         toast.error(res?.error?.data?.message, { id: toastId });
@@ -124,11 +124,10 @@ const CreateStudent = () => {
       if (res?.data?.success) {
         toast.success(res?.data?.message, { id: toastId });
       }
-    }catch(err){
+    } catch (err) {
       toast.error("Something went wrong!");
-      console.log(err)
+      console.log(err);
     }
-
   };
   return (
     <Row>
@@ -175,6 +174,22 @@ const CreateStudent = () => {
                 options={bloodGroupOptions}
                 name="bloogGroup"
                 label="Blood Group:"
+              />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <Controller
+                name="profileImg"
+                render={({ field: { onChange, value, ...field } }) => (
+                  <Form.Item label="Picture: ">
+                    <Input
+                      type="file"
+                      value={value?.firstName}
+                      {...field}
+                      onChange={(e) => onChange(e.target.files?.[0])}
+                      size="large"
+                    />
+                  </Form.Item>
+                )}
               />
             </Col>
           </Row>
