@@ -55,9 +55,9 @@ export const adminPaths = [
     name: "User Management",
     children: [
       {
-        name: "Create Admin",
-        path: "create-admin",
-        element: <CreateAdmin />,
+        name: "Create Student",
+        path: "create-student",
+        element: <CreateStudent />,
       },
       {
         name: "Students",
@@ -69,10 +69,11 @@ export const adminPaths = [
         path: "create-faculty",
         element: <CreateFaculty />,
       },
+
       {
-        name: "Create Student",
-        path: "create-student",
-        element: <CreateStudent />,
+        name: "Create Admin",
+        path: "create-admin",
+        element: <CreateAdmin />,
       },
     ],
   },

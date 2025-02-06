@@ -56,15 +56,15 @@ const studentDummyData = {
 
 const defatultData = {
   name: {
-    firstName: "I am ",
-    middleName: "Student",
-    lastName: "Number 1",
+    firstName: "Anthokhiya",
+    middleName: "Nath",
+    lastName: "Pronoy",
   },
   gender: "male",
   contactNo: "1235678",
   bloogGroup: "A+",
 
-  email: "hello@gmail.com",
+  email: "nath@gmail.com",
   emergencyContactNo: "987-654-3210",
   presentAddress: "123 Main St, Cityville",
   permanentAddress: "456 Oak St, Townsville",
@@ -132,7 +132,7 @@ const CreateStudent = () => {
   return (
     <Row>
       <Col span={24}>
-        <PHForm onSubmit={handleAddStudent} defaultValues={defatultData}>
+        <PHForm onSubmit={handleAddStudent} >
           <Divider>Personal Info.</Divider>
           <Row gutter={8}>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>

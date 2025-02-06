@@ -1,27 +1,47 @@
 import { useState } from "react";
-import { TAcademicSemester } from "../../../types/academicManagement.type";
 import { TQueryParam, TStudentData } from "../../../types";
-import { useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagement.api";
-import { Button, Space, Table, TableColumnsType, TableProps } from "antd";
+import {
+  Button,
+  Pagination,
+  Space,
+  Table,
+  TableColumnsType,
+  TableProps,
+} from "antd";
 import { useGetAllStudentDataQuery } from "../../../redux/features/admin/userManagement.api";
 
-type TableDataType =
-  | (Pick<TStudentData, "_id" | "name" | "id"> & {
-      key: string;
-    })
-  | undefined;
+// type TableDataType = (Pick<TStudentData, "_id" | "fullName" | "id"> & {
+//       key: string;
+//     });
+
+type TableDataType = Pick<
+  TStudentData,
+  "fullName" | "id" | "email" | "contactNo"
+> & {
+  key: string;
+};
 
 const StudentData = () => {
-  const [params, setParams] = useState<TQueryParam[] | undefined>([]);
-  const { data: studentData, isFetching } = useGetAllStudentDataQuery(params);
+  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [page, setPage] = useState(1);
+  const { data: studentData, isFetching } = useGetAllStudentDataQuery([
+    { name: "limit", value: 3 },
+    { name: "page", value: page },
+    { name: "sort", value: "id" },
+    ...params,
+  ]);
 
-  console.log("student", studentData);
-
-  const tableData = studentData?.data?.map(({ _id, fullName, id }) => ({
-    key: _id,
-    fullName,
-    id,
-  }));
+  const metaData = studentData?.meta;
+  console.log("metaData", metaData);
+  const tableData = studentData?.data?.map(
+    ({ _id, fullName, id, email, contactNo }) => ({
+      key: _id,
+      fullName,
+      id,
+      email,
+      contactNo,
+    })
+  );
 
   const columns: TableColumnsType<TableDataType> = [
     {
@@ -48,6 +68,14 @@ const StudentData = () => {
       dataIndex: "id",
     },
     {
+      title: "Email",
+      dataIndex: "email",
+    },
+    {
+      title: "Contact No.",
+      dataIndex: "contactNo",
+    },
+    {
       title: "Action",
       key: "x",
       render: () => {
@@ -59,7 +87,7 @@ const StudentData = () => {
           </Space>
         );
       },
-      width: '1%',
+      width: "1%",
     },
   ];
 
@@ -82,13 +110,22 @@ const StudentData = () => {
     }
   };
   return (
-    <Table<TableDataType>
-      loading={isFetching}
-      columns={columns}
-      dataSource={tableData}
-      onChange={onChange}
-      showSorterTooltip={{ target: "sorter-icon" }}
-    />
+    <>
+      <Table<TableDataType>
+        loading={isFetching}
+        columns={columns}
+        dataSource={tableData}
+        onChange={onChange}
+        pagination={false}
+        showSorterTooltip={{ target: "sorter-icon" }}
+      />
+      <Pagination
+        current={page}
+        onChange={(value) => setPage(value)}
+        pageSize={metaData?.limit ? Number(metaData?.limit) : 0}
+        total={metaData?.total}
+      />
+    </>
   );
 };
 
