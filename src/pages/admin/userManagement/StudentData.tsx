@@ -9,6 +9,7 @@ import {
   TableProps,
 } from "antd";
 import { useGetAllStudentDataQuery } from "../../../redux/features/admin/userManagement.api";
+import { Link } from "react-router-dom";
 
 // type TableDataType = (Pick<TStudentData, "_id" | "fullName" | "id"> & {
 //       key: string;
@@ -78,11 +79,16 @@ const StudentData = () => {
     {
       title: "Action",
       key: "x",
-      render: () => {
+      render: (item) => {
+        console.log(item);
         return (
           <Space>
-            <Button>Details</Button>
-            <Button>Update</Button>
+            <Link to={`/admin/student-data/${item?.key}`}>
+              <Button>Details</Button>
+            </Link>
+            <Link to={`/admin/update-student-data/${item?.key}`}>
+              <Button>Update</Button>
+            </Link>
             <Button>Block</Button>
           </Space>
         );
