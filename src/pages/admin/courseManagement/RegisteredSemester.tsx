@@ -6,8 +6,12 @@ import { useGetAllSemestersQuery } from "../../../redux/features/admin/academicM
 import { semesterStatusOptions } from "../../../config/constants/semester";
 import PHInput from "../../../components/form/PHInput";
 import PHDatePicker from "../../../components/form/PHDatePicker";
+import { useAddRegisteredSemesterMutation } from "../../../redux/features/admin/courseManagement.api";
+import { toast } from "sonner";
+import { TResponse } from "../../../types";
 
 const RegisteredSemester = () => {
+  const [addRegisteredSemester] = useAddRegisteredSemesterMutation();
   const { data: semesterData } = useGetAllSemestersQuery([
     { name: "sort", value: "year" },
   ]);
@@ -17,30 +21,28 @@ const RegisteredSemester = () => {
   }));
 
   const handleCreate: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
+    const toastId = toast.loading("creating...");
 
-    // const semesterData = {
-    //   name: name,
-    //   code: data?.name,
-    //   year: data?.year,
-    //   startMonth: data?.startMonth,
-    //   endMonth: data?.endMonth,
-    // };
-    // try {
-    //   console.log(semesterData);
-    //   const res = (await createAcademicSemester(semesterData)) as TResponse<any>;
-    //   if (res?.error) {
-    //     toast.error(res?.error?.data?.message, { id: toastId });
-    //   }
-    //   if (res?.data?.success) {
-    //     toast.success(res?.data?.message, { id: toastId });
-    //   }
-    //   console.log("res", res);
-    // } catch (err) {
-    //   toast.error("Something went wrong!", { id: toastId });
-    //   console.log(err);
-    // }
+    const semesterData = {
+      ...data,
+      minCredit: Number(data.minCredit),
+      maxCredit: Number(data.maxCredit),
+    };
     // console.log(semesterData);
+    try {
+      console.log(semesterData);
+      const res = (await addRegisteredSemester(semesterData)) as TResponse<any>;
+      if (res?.error) {
+        toast.error(res?.error?.data?.message, { id: toastId });
+      }
+      if (res?.data?.success) {
+        toast.success(res?.data?.message, { id: toastId });
+      }
+      console.log("res", res);
+    } catch (err) {
+      toast.error("Something went wrong!", { id: toastId });
+      console.log(err);
+    }
   };
 
   return (
