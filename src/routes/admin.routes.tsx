@@ -11,11 +11,12 @@ import AcademicDepartment from "../pages/admin/academicManagement/AcademicDepart
 import StudentData from "../pages/admin/userManagement/StudentData";
 import StudentDetails from "../pages/admin/userManagement/StudentDetails";
 import StudentUpdate from "../pages/admin/userManagement/StudentUpdate";
-import RegisteredSemester from "../pages/admin/courseManagement/RegisteredSemester";
 import CreateCourse from "../pages/admin/courseManagement/CreateCourse";
 import Courses from "../pages/admin/courseManagement/Courses";
 import OfferCourse from "../pages/admin/courseManagement/OfferCourse";
 import OfferedCourses from "../pages/admin/courseManagement/OfferedCourses";
+import SemeterRegistration from "../pages/admin/courseManagement/SemeterRegistration";
+import RegisteredSemester from "../pages/admin/courseManagement/RegisteredSemester";
 
 export const adminPaths = [
   {
@@ -95,6 +96,11 @@ export const adminPaths = [
   {
     name: "Course Management",
     children: [
+      {
+        name: "Semester Registration",
+        path: "semester-registration",
+        element: <SemeterRegistration />,
+      },
       {
         name: "Registered Semester",
         path: "registered-semester",

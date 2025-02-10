@@ -14,7 +14,7 @@ const CreateAcademicFaculty = () => {
     const toastId = toast.loading("creating...");
     console.log(data);
     try {
-      const res = (await createFaculty(data)) as TResponse;
+      const res = (await createFaculty(data)) as TResponse<any>;
       console.log(res)
       if (res?.error) {
         toast.error(res?.error?.data?.message, { id: toastId });

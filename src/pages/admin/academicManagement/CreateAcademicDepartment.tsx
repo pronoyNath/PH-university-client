@@ -10,6 +10,7 @@ import { Button, Col, Flex } from "antd";
 import PHForm from "../../../components/form/PHForm";
 import PHInput from "../../../components/form/PHInput";
 import { toast } from "sonner";
+import { TResponse } from "../../../types";
 
 const CreateAcademicDepartment = () => {
   const { data: facultyData } = useGetAcademicFacultyQuery(undefined);
@@ -23,7 +24,7 @@ console.log(modifiedFacultyData,",mm")
     const toastId = toast.loading("creating...");
     console.log(data);
     try {
-      const res = (await createDepartment(data)) as TResponse;
+      const res = (await createDepartment(data)) as TResponse<any>;
       console.log(res);
       if (res?.error) {
         toast.error(res?.error?.data?.message, { id: toastId });

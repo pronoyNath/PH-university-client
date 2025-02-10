@@ -2,7 +2,7 @@ import baseApi from "../../api/baseApi";
 
 const courseManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // getAllStudentData: builder.query({
+    // getAllRegisteredSemester: builder.query({
     //   query: (args) => {
     //     const params = new URLSearchParams();
     //     if (args) {
