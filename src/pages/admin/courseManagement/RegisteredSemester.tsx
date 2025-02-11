@@ -1,14 +1,39 @@
-import { Button, Table, TableColumnsType, Tag } from "antd";
-import { useGetAllRegisteredSemesterQuery } from "../../../redux/features/admin/courseManagement.api";
+import { Button, Dropdown, Table, TableColumnsType, Tag } from "antd";
+import {
+  useGetAllRegisteredSemesterQuery,
+  useUpdateRegisteredSemesterMutation,
+} from "../../../redux/features/admin/courseManagement.api";
 import moment from "moment";
-import { TRegisteredSemester } from "../../../types";
+import { TRegisteredSemester, TResponse } from "../../../types";
+import { useState } from "react";
+import { toast } from "sonner";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 type TableDataType = Pick<
   TRegisteredSemester,
   "startDate" | "endDate" | "status"
 > & { key: string };
 
+const items = [
+  {
+    label: "Upcoming",
+    key: "UPCOMING",
+  },
+  {
+    label: "Ongoing",
+    key: "ONGOING",
+  },
+  {
+    label: "Ended",
+    key: "ENDED",
+  },
+];
+
 const RegisteredSemester = () => {
   // const [params, setParams] = useState<TQueryParam[] | undefined>([]);
+  const [semesterID, setSemesterID] = useState<string | undefined>(undefined);
+
+  const [updateSemesterStatus] = useUpdateRegisteredSemesterMutation();
+
   const { data: semesterData, isFetching } =
     useGetAllRegisteredSemesterQuery(undefined);
 
@@ -21,6 +46,34 @@ const RegisteredSemester = () => {
       status,
     })
   );
+
+  const handleStatusUpdate: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("creating...");
+    const updateData = {
+      id: semesterID,
+      data: {
+        status: data.key,
+      },
+    };
+    updateSemesterStatus(updateData);
+    try {
+      const res = (await updateSemesterStatus(updateData)) as TResponse<any>;
+      if (res?.error) {
+        toast.error(res?.error?.data?.message, { id: toastId });
+      }
+      if (res?.data?.success) {
+        toast.success(res?.data?.message, { id: toastId });
+      }
+    } catch (err) {
+      toast.error("Something went wrong!");
+      console.log(err);
+    }
+  };
+
+  const menuProps = {
+    items,
+    onClick: handleStatusUpdate,
+  };
 
   const columns: TableColumnsType<TableDataType> = [
     {
@@ -57,12 +110,9 @@ const RegisteredSemester = () => {
       render: (item) => {
         console.log(item);
         return (
-          <div>
-            <Button type="primary">Edit</Button>
-            <Button type="primary" danger>
-              Delete
-            </Button>
-          </div>
+          <Dropdown menu={menuProps} trigger={["click"]}>
+            <Button onClick={() => setSemesterID(item.key)}>Update</Button>
+          </Dropdown>
         );
       },
       width: "1%",
