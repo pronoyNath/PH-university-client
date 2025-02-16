@@ -74,7 +74,7 @@ const courseManagementApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["courses"],
+      invalidatesTags: ["registered_semester","courses"],
     }),
   }),
 });
